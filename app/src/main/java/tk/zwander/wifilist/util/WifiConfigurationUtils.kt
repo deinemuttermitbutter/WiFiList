@@ -4,7 +4,7 @@ package tk.zwander.wifilist.util
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.internal.wifi.WifiAnnotations.SecurityType
+import android.net.wifi.WifiInfo
 import android.net.wifi.WifiConfiguration
 import android.net.wifi.WifiConfiguration.AuthAlgorithm
 import android.net.wifi.WifiConfiguration.GroupCipher
@@ -14,6 +14,26 @@ import android.net.wifi.WifiConfiguration.Protocol
 import android.os.Build
 import androidx.annotation.StringRes
 import tk.zwander.wifilist.R
+
+annotation class SecurityType {
+    companion object {
+        const val UNKNOWN = WifiInfo.SECURITY_TYPE_UNKNOWN
+        const val OPEN = WifiInfo.SECURITY_TYPE_OPEN
+        const val WEP = WifiInfo.SECURITY_TYPE_WEP
+        const val PSK = WifiInfo.SECURITY_TYPE_PSK
+        const val EAP = WifiInfo.SECURITY_TYPE_EAP
+        const val SAE = WifiInfo.SECURITY_TYPE_SAE
+        const val EAP_WPA3_ENTERPRISE_192_BIT = WifiInfo.SECURITY_TYPE_EAP_WPA3_ENTERPRISE_192_BIT
+        const val OWE = WifiInfo.SECURITY_TYPE_OWE
+        const val WAPI_PSK = WifiInfo.SECURITY_TYPE_WAPI_PSK
+        const val WAPI_CERT = WifiInfo.SECURITY_TYPE_WAPI_CERT
+        const val EAP_WPA3_ENTERPRISE = WifiInfo.SECURITY_TYPE_EAP_WPA3_ENTERPRISE
+        const val OSEN = WifiInfo.SECURITY_TYPE_OSEN
+        const val PASSPOINT_R1_R2 = WifiInfo.SECURITY_TYPE_PASSPOINT_R1_R2
+        const val PASSPOINT_R3 = WifiInfo.SECURITY_TYPE_PASSPOINT_R3
+        const val DPP = WifiInfo.SECURITY_TYPE_DPP
+    }
+}
 
 val WifiConfiguration.simpleKey: String?
     get() {
@@ -55,7 +75,7 @@ data class SecurityParams(
                             allowedGroupCiphers.filter { it != GroupCipher.GCMP_128 }.all { config.allowedGroupCiphers.get(it) } &&
                             allowedAuthAlgorithms.all { config.allowedAuthAlgorithms.get(it) } &&
                             allowedGroupManagementCiphers.all { config.allowedGroupManagementCiphers.get(it) } &&
-                            requirePmf == config.requirePmf
+                            false
                 }
             }
         } else {
@@ -65,7 +85,7 @@ data class SecurityParams(
                     allowedGroupCiphers.all { config.allowedGroupCiphers.get(it) } &&
                     allowedAuthAlgorithms.all { config.allowedAuthAlgorithms.get(it) } &&
                     allowedGroupManagementCiphers.all { config.allowedGroupManagementCiphers.get(it) } &&
-                    requirePmf == config.requirePmf
+                    false
         }
     }
 }

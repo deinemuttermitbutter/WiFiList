@@ -61,7 +61,7 @@ fun WiFiCard(
                 Spacer(modifier = Modifier.size(8.dp))
 
                 Text(
-                    text = config.printableSsid,
+                    text = config.SSID,
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp,
                 )
@@ -120,10 +120,10 @@ fun WiFiCard(
                         config.FQDN.letNotEmpty {
                             TwoLineText(value = config.FQDN, label = stringResource(id = R.string.fqdn))
                         }
-                        TwoLineText(value = config.creatorName, label = stringResource(id = R.string.creator))
-                        TwoLineText(value = config.lastUpdateName, label = stringResource(id = R.string.last_update))
+                        TwoLineText(value = "Unknown creator", label = stringResource(id = R.string.creator))
+                        TwoLineText(value = "Unknown last_update", label = stringResource(id = R.string.last_update))
                         TwoLineText(
-                            value = config.allowAutojoin.toString(),
+                            value = "Unknown auto_join",
                             label = stringResource(id = R.string.auto_join),
                         )
                         TwoLineText(value = config.hiddenSSID.toString(), label = stringResource(id = R.string.hidden))
@@ -135,12 +135,8 @@ fun WiFiCard(
                             wifiEnterpriseConfig.altSubjectMatch.letNotEmpty {
                                 TwoLineText(value = it, label = stringResource(id = R.string.alt_subject))
                             }
-                            wifiEnterpriseConfig.caPath.letNotEmpty {
-                                TwoLineText(value = it, label = stringResource(id = R.string.ca_path))
-                            }
-                            wifiEnterpriseConfig.clientCertificateAlias.letNotEmpty {
-                                TwoLineText(value = it, label = stringResource(id = R.string.cert_alias))
-                            }
+                            TwoLineText(value = "Unknown ca_path", label = stringResource(id = R.string.ca_path))
+                            TwoLineText(value = "Unknown clientCertificateAlias", label = stringResource(id = R.string.cert_alias))
                             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) {
                                 wifiEnterpriseConfig.clientKeyPairAlias.letNotEmpty {
                                     TwoLineText(value = it, label = stringResource(id = R.string.keypair_alias))
@@ -195,9 +191,7 @@ fun WiFiCard(
                             wifiEnterpriseConfig.realm.letNotEmpty {
                                 TwoLineText(value = it, label = stringResource(id = R.string.realm))
                             }
-                            wifiEnterpriseConfig.wapiCertSuite.letNotEmpty {
-                                TwoLineText(value = it, label = stringResource(id = R.string.cert_suite))
-                            }
+                            TwoLineText(value = "Unknown wapiCertSuite", label = stringResource(id = R.string.cert_suite))
                         }
                     }
                 }

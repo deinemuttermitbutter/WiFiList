@@ -12,7 +12,7 @@ object WiFiExportGenerator {
     fun Collection<WifiConfiguration>.mapToExportItems(): List<WiFiExportItem> {
         return map {
             WiFiExportItem(
-                ssid = it.printableSsid,
+                ssid = it.SSID,
                 security = it.securityParamsObj?.type?.name ?: "UNKNOWN",
                 password = it.simpleKey ?: "",
             )
