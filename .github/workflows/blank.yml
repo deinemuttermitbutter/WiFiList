@@ -23,12 +23,14 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      - name: Build APK
-        run: ./gradlew assembleRelease
-
-      - name: Upload APK to Release
-        uses: softprops/action-gh-release@v1
+      - name: upload artifact
+        uses: actions/upload-artifact@v3
+        if: success()
         with:
-          files: app/build/outputs/apk/release/*.apk
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: ${{ env.APP_UPLOAD_NAME }}
+          path: ${{ env.APP_UPLOAD }}
+          uses: softprops/action-gh-release@v1
+          with:
+            files: app/build/outputs/apk/release/*.apk
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
