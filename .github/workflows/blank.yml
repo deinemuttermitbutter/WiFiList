@@ -23,14 +23,19 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      - name: upload artifact
-        uses: actions/upload-artifact@v3
-        if: success()
+      - name: Build release APK
+        run: ./gradlew assembleRelease
+
+      - name: Verify APK file exists
+        run: |
+          if [ ! -f app/build/outputs/apk/release/app-release.apk ]; then
+            echo "APK file not found!"
+            exit 1
+          fi
+
+      - name: Upload APK to Artifacts
+        uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.APP_UPLOAD_NAME }}
-          path: ${{ env.APP_UPLOAD }}
-          uses: softprops/action-gh-release@v1
-          with:
-            files: app/build/outputs/apk/release/*.apk
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: app-release-apk
+          path: app/build/outputs/apk/release/app-release.apk
+          retention-days: 1
